@@ -1,41 +1,54 @@
-# Public Drift-Diffusion Models
+# Integration of memory and sensory in sequence production
 
-This directory hosts two self-contained Jupyter notebooks illustrating drift–diffusion style models for sequential finger presses.
+This repository contains analysis of experimental data alongside drift-diffusion style modelling of the sequential finger pressing task of the paper
+> Nazerzadeh, A., Porwal, M., Pruszynski, J.A., Diedrichsen, J. 2025. Integration of memory and sensory in sequence production, *bioRxiv* [https://doi.org/10.1101/2025.09.10.675426](https://doi.org/10.1101/2025.09.10.675426)
 
-## Notebooks
+## Contents
 
-### `single_press_model.ipynb`
+- `single_press_model.ipynb`: single-press modeling. One CONFIG block drives the whole run; Replicates RT/accuracy of experimental data.
 
-Minimal model for a single  press decision with separate visual vs memory evidence streams. Produces basic reaction time (RT) and accuracy summaries across parameterized conditions.
+- `sequence_model.ipynb`: sequence modeling that integrates visual and memory inputs. Replicates experimental data and predicts behavior in response to violations.
 
-### `sequence_model.ipynb`
-
-Extends single-press model to sequences with different visual visiblities (visible horizon).
-- models the effect of isolated violations in learned sequences
+- `data_analysis.ipynb`: experimental data analysis for Experiments 1, 2, and 3.
+- `data/`: CSV inputs to the analysis notebook.
 
 ## Quick Start
 
-1. Open a notebook in Jupyter / VS Code.
+1. Open any notebook in Jupyter / VS Code.
 2. Run cells top-to-bottom. Figures and summary DataFrames will appear inline.
+3. For modeling, adjust the CONFIG/parameter blocks near the top (e.g., drifts, thresholds, window sizes) before re-running result cells.
+4. For data analysis, ensure the CSVs listed in **Data files** are present in `data/`.
 
-## Key Parameters (sequence model)
+## Data files (for `data_analysis.ipynb`)
+
+- `data/EXP1_subjs_blocks.csv`: Experiment 1 MT/ER across blocks and days (sessions 1–3).
+- `data/EXP1_subjs.csv`: Experiment 1 MT/ER by window size and condition; includes day 4 violation.
+- `data/EXP1_violation_subjs_presses.csv`: Experiment 1 RT and error rates at the changed digit position on day 4.
+- `data/EXP2_violation_subjs_presses.csv`: Experiment 2 IPIs based on their distance to the violation.
+- `data/EXP3_violation_subjs_presses.csv`: Experiment 3 IPIs based on their distance to the violation.
+
+## Key Model Parameters (sequence_model.ipynb)
 
 | Name | Meaning |
-| ---- | ------- |
-| `window` | Visible horizon (positions ahead) |
-| `memory_drift_coef` | Base memory evidence strength |
+| --- | --- |
+| `window` | Visible horizon |
 | `visual_drift_coef` | Base visual evidence strength |
-| `alpha`,`beta` | Decay / lateral inhibition coefficients |
-| `threshold` | Planning completion bound |
-| `visual_delay`,`motor_delay` | Stimulus vs execution latencies |
-
-Adjust these to explore speed–accuracy tradeoffs.
+| `memory_drift_coef` | Base memory input strength |
+| `diffusion` | Gaussian noise |
+| `threshold` | Decision bound (evidence limit) |
+| `alpha` | Leakage / decay rate |
+| `beta` | Lateral inhibition strength |
+| `visual_delay` | Sensory latency |
+| `motor_delay` | Execution latency|
+| `sensory_param` | Sensory input weights |
+| `memory_param` | Memory input weights |
+| `memory_drift_adaptive_coef_*` | Violation adaptation (activation/deactivation) |
 
 ## Citation
-> **Integration of memory and sensory information in skilled sequence production**  
-> Amin Nazerzadeh, Medha Porwal, J. Andrew Pruszynski, Jörn Diedrichsen  
-> *bioRxiv* (2025). [https://doi.org/10.1101/2025.09.10.675426](https://doi.org/10.1101/2025.09.10.675426)
 
+> **Integration of memory and sensory information in skilled sequence production**
+> Amin Nazerzadeh, Medha Porwal, J. Andrew Pruszynski, Jörn Diedrichsen
+> *bioRxiv* (2025). [https://doi.org/10.1101/2025.09.10.675426](https://doi.org/10.1101/2025.09.10.675426)
 
 ## License
 
